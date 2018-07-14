@@ -19,7 +19,7 @@ npm spring-boot:run
 go to [http://localhost:8081/api](http://localhost:8081/api) in your browser or Postman (or the other similar app)
 
 ## File Structure
-We are using Controller, Service, Repository layer in our this starter, this is way to ensure maintainable code based on behavior for each layer.
+We are using Controller, Service, Repository layer in this starter. this way to ensure maintainable code based on behavior for each layer.
 ```
 springboot.starter
  ├─common/                          * our common files

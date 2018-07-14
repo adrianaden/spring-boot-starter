@@ -19,15 +19,9 @@ npm spring-boot:run
 go to [http://localhost:8081/api](http://localhost:8081/api) in your browser or Postman (or the other similar app)
 
 ## File Structure
-<<<<<<< HEAD
 We are using Controller, Service, Repository layer in our this starter, this is way to ensure maintainable code based on behavior for each layer.
 ```
-springboot.starter/
-=======
-
-```
-springboot.tarter/
->>>>>>> 040ced53304d17f0443dad14b1a1bd482c5ff836
+springboot.starter
  ├─common/                          * our common files
  │   ├──Constant                    * our files to maintain constant variables
  │   └──Tool                        * our files to maintain static/ reusable methods
@@ -35,8 +29,7 @@ springboot.tarter/
  ├──config/                         * our configuration files
  │   └──SwaggerConfig               * configuration file to configure swagger documentation
  │
- ├──dto                             * our DTO(Data Transfer Object) files
-<<<<<<< HEAD
+ ├──dto
  │   ├──FailureResponse             * our JSON format that return by exception handler
  │   ├──SuccessResponse             * our JSON format that return is transaction/ process is success
  │   └──Response                    * our JSON standard JSON format
@@ -48,10 +41,6 @@ springboot.tarter/
  │   ├──Interceptor                 * our main Interceptor
  │   └──LogInterceptor              * our pre and post handle that log activity in web service
  │
-=======
- ├──exception                       * our custom exception files and exception handler
- ├──interceptor                     * our filter files
->>>>>>> 040ced53304d17f0443dad14b1a1bd482c5ff836
  ├──entity                          * our entity files that mapping to table in database
  │   └──Person                      * our object mapping table Person
  │

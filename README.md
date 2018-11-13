@@ -14,7 +14,7 @@ cd spring-boot-starter
 mvn install
 
 # start the application
-npm spring-boot:run
+mvn spring-boot:run
 ```
 go to [http://localhost:8081/api](http://localhost:8081/api) in your browser or Postman (or the other similar app)
 

@@ -22,15 +22,7 @@ public interface PersonService {
     Page<Person> findPage(Pageable xPageable);
 
     /**
-     * find person by id
-     *
-     * @param xID the person id
-     * @return one optional person
-     */
-    Optional<Person> findOne(Long xID);
-
-    /**
-     * find person in object
+     * find person by Id
      *
      * @param xID the person id
      * @return one person

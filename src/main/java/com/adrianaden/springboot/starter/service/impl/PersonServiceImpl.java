@@ -2,6 +2,7 @@ package com.adrianaden.springboot.starter.service.impl;
 
 import com.adrianaden.springboot.starter.common.Tool;
 import com.adrianaden.springboot.starter.entity.Person;
+import com.adrianaden.springboot.starter.exception.NoObjectFoundException;
 import com.adrianaden.springboot.starter.repository.PersonRepository;
 import com.adrianaden.springboot.starter.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -30,22 +32,12 @@ public class PersonServiceImpl implements PersonService {
     }
 
     /**
-     * find person by id
-     *
-     * @param xID the person id
-     * @return one optional person
-     */
-    public Optional<Person> findOne(Long xID) {
-        return personRepository.findById(xID);
-    }
-
-    /**
      * find person in object
      * @param xID the person id
      * @return one person
      */
     public Person findOneById(Long xID) {
-        return findOne(xID).get();
+        return personRepository.findById(xID).orElseThrow(NoObjectFoundException::new);
     }
 
     /**

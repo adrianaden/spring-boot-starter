@@ -26,6 +26,15 @@ public class HandlerException {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(FailureResponse.body(message, errors));
     }
 
+
+    @ExceptionHandler(NoObjectFoundException.class)
+    ResponseEntity<FailureResponse> noObjectFoundExceptionHandler(NoObjectFoundException e) {
+        String message = e.getClass().getSimpleName() + ".class " + e.getMessage();
+        String[] errors = new String[]{e.getMessage()};
+
+        return ResponseEntity.status(NoObjectFoundException.STATUS_CODE).body(FailureResponse.body(message, errors));
+    }
+
     @ExceptionHandler(NoSuchElementException.class)
     ResponseEntity<FailureResponse> noSuchElementExceptionHandler(NoSuchElementException e) {
         String message = e.getClass().getSimpleName() + ".class " + e.getMessage();
@@ -35,11 +44,11 @@ public class HandlerException {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    ResponseEntity<FailureResponse> methodArgumentNotValidException(MethodArgumentNotValidException e){
+    ResponseEntity<FailureResponse> methodArgumentNotValidException(MethodArgumentNotValidException e) {
         String message = "arguments not valid";
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         String[] errors = new String[fieldErrors.size()];
-        for(int i = 0; i < fieldErrors.size(); i++){
+        for (int i = 0; i < fieldErrors.size(); i++) {
             FieldError fieldError = fieldErrors.get(i);
             errors[i] = fieldError.getField() + " " + fieldError.getDefaultMessage();
         }

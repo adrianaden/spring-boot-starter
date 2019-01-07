@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 public class Person {
@@ -48,24 +49,24 @@ public class Person {
 
     @Getter
     @Column(name = "created_date")
-    private Timestamp createdDate;
+    private LocalDateTime createdDate;
 
     @Getter
     @Column(name = "update_date")
-    private Timestamp updatedDate;
+    private LocalDateTime updatedDate;
 
     @PrePersist
     public void prePersist() {
         this.generateFullName();
         this.generateSalutation();
-        createdDate = new Timestamp(System.currentTimeMillis());
+        createdDate = LocalDateTime.now();
     }
 
     @PreUpdate
     public void preUpdate() {
         this.generateFullName();
         this.generateSalutation();
-        updatedDate = new Timestamp(System.currentTimeMillis());
+        updatedDate = LocalDateTime.now();
     }
 
     private void generateFullName() {

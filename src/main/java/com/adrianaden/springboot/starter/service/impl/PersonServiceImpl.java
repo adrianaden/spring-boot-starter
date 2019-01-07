@@ -1,8 +1,9 @@
-package com.adrianaden.springboot.starter.service;
+package com.adrianaden.springboot.starter.service.impl;
 
 import com.adrianaden.springboot.starter.common.Tool;
 import com.adrianaden.springboot.starter.entity.Person;
 import com.adrianaden.springboot.starter.repository.PersonRepository;
+import com.adrianaden.springboot.starter.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +12,12 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
-public interface PersonService {
+@Service
+@Transactional
+public class PersonServiceImpl implements PersonService {
+    @Autowired
+    private PersonRepository personRepository;
+
 
     /**
      * find all person
@@ -19,7 +25,9 @@ public interface PersonService {
      * @param xPageable the page, set 'null' to get all data
      * @return the page of person
      */
-    Page<Person> findPage(Pageable xPageable);
+    public Page<Person> findPage(Pageable xPageable) {
+        return personRepository.findAll(xPageable);
+    }
 
     /**
      * find person by id
@@ -27,15 +35,18 @@ public interface PersonService {
      * @param xID the person id
      * @return one optional person
      */
-    Optional<Person> findOne(Long xID);
+    public Optional<Person> findOne(Long xID) {
+        return personRepository.findById(xID);
+    }
 
     /**
      * find person in object
-     *
      * @param xID the person id
      * @return one person
      */
-    Person findOneById(Long xID);
+    public Person findOneById(Long xID) {
+        return findOne(xID).get();
+    }
 
     /**
      * update all field in person by id
@@ -44,7 +55,10 @@ public interface PersonService {
      * @param xPerson person to be update
      * @return updated person
      */
-    Person update(Long xID, Person xPerson);
+    public Person update(Long xID, Person xPerson) {
+        xPerson.setId(xID);
+        return personRepository.save(xPerson);
+    }
 
     /**
      * patch specific field in person by id
@@ -53,7 +67,13 @@ public interface PersonService {
      * @param xPerson person to be update
      * @return updated person
      */
-    Person patch(Long xID, Person xPerson);
+    public Person patch(Long xID, Person xPerson) {
+        Person person = findOneById(xID);
+        Tool.copyNonNullProperties(xPerson, person);
+
+
+        return personRepository.save(person);
+    }
 
     /**
      * create new person
@@ -61,14 +81,19 @@ public interface PersonService {
      * @param xPerson the person to be create
      * @return created person
      */
-    Person create(Person xPerson);
+    public Person create(Person xPerson) {
+        return personRepository.save(xPerson);
+    }
 
     /**
      * delete person by id
-     *
      * @param xID the person id
      * @return deleted person
      */
-    Person delete(Long xID);
+    public Person delete(Long xID){
+        Person person = findOneById(xID);
+        personRepository.delete(person);
+        return person;
+    }
 
 }

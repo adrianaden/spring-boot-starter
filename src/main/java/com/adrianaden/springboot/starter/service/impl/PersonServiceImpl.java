@@ -2,7 +2,6 @@ package com.adrianaden.springboot.starter.service.impl;
 
 import com.adrianaden.springboot.starter.common.Tool;
 import com.adrianaden.springboot.starter.entity.Person;
-import com.adrianaden.springboot.starter.exception.NoObjectFoundException;
 import com.adrianaden.springboot.starter.repository.PersonRepository;
 import com.adrianaden.springboot.starter.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public class PersonServiceImpl implements PersonService {
      * @return one person
      */
     public Person findOneById(Long xID) {
-        return personRepository.findById(xID).orElseThrow(NoObjectFoundException::new);
+        return personRepository.findById(xID).orElseThrow(NoSuchElementException::new);
     }
 
     /**

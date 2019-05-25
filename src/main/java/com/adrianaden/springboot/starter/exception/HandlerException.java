@@ -14,6 +14,8 @@ public class HandlerException {
 
     @ExceptionHandler(Exception.class)
     ResponseEntity<FailureResponse> exceptionHandler(Exception e) {
+        log.error(e.getMessage(), e);
+
         return ResponseEntity.badRequest()
                 .body(FailureResponse.builder()
                         .status(HttpStatus.BAD_REQUEST.value())
@@ -25,6 +27,8 @@ public class HandlerException {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity<FailureResponse> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error(e.getMessage(), e);
+
         String[] errors = e.getBindingResult().getFieldErrors().stream()
                            .map(f -> f.getField() + " " + f.getDefaultMessage())
                            .toArray(String[]::new);

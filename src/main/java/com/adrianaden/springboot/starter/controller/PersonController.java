@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping(value = Constant.PATH_PERSON)
-public class PersonController {
+class PersonController {
 
     @Autowired
     private PersonService personService;
@@ -26,7 +26,6 @@ public class PersonController {
 
     @GetMapping(value = Constant.PATH_VARIABLE_ID)
     ResponseEntity<Person> findOneById(@PathVariable("id") Long id) {
-
         return ResponseEntity.ok(personService.findOneById(id));
     }
 

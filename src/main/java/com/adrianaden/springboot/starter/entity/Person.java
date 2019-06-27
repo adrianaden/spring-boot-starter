@@ -2,6 +2,7 @@ package com.adrianaden.springboot.starter.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
+@ToString
 public class Person {
 
     @Setter
@@ -19,13 +21,11 @@ public class Person {
 
     @Setter
     @Getter
-    @NotNull
     @Column(name = "first_name")
     private String firstName;
 
     @Setter
     @Getter
-    @NotNull
     @Column(name = "last_name")
     private String lastName;
 
@@ -57,29 +57,11 @@ public class Person {
 
     @PrePersist
     public void prePersist() {
-        this.generateFullName();
-        this.generateSalutation();
         createdDate = LocalDateTime.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.generateFullName();
-        this.generateSalutation();
         updatedDate = LocalDateTime.now();
-    }
-
-    private void generateFullName() {
-        fullName = firstName + ' ' + lastName;
-    }
-
-    private void generateSalutation() {
-        if ("M".equals(gender)) {
-            salutation = "Mr";
-        } else if ("F".equals(gender)) {
-            salutation = "Mrs";
-        } else {
-            salutation = null;
-        }
     }
 }

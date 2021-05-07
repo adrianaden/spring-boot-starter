@@ -30,12 +30,13 @@ public class HandlerException {
         log.error(e.getMessage(), e);
 
         String[] errors = e.getBindingResult().getFieldErrors().stream()
-                           .map(f -> f.getField() + " " + f.getDefaultMessage())
-                           .toArray(String[]::new);
+                .map(f -> f.getField() + " " + f.getDefaultMessage())
+                .toArray(String[]::new);
 
         return ResponseEntity.badRequest()
                 .body(FailureResponseDto.builder()
                         .status(HttpStatus.BAD_REQUEST.value())
+                        .timestamp(System.currentTimeMillis())
                         .message("Arguments not valid")
                         .errors(errors)
                         .build()

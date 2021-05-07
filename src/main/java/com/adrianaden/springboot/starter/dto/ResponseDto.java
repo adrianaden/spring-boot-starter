@@ -1,11 +1,8 @@
 package com.adrianaden.springboot.starter.dto;
 
-import com.adrianaden.springboot.starter.annotation.Dto;
 import org.dozer.DozerBeanMapper;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.Assert;
 
 public class ResponseDto<T> extends HttpEntity<T> {
 
@@ -17,7 +14,6 @@ public class ResponseDto<T> extends HttpEntity<T> {
         super(body);
         this.status = status;
     }
-
 
     public static ResponseDto.Builder accepted() {
         return status(HttpStatus.ACCEPTED);
@@ -43,8 +39,6 @@ public class ResponseDto<T> extends HttpEntity<T> {
         }
 
         public <T> ResponseDto<T> convertTo(Object entity, Class<T> aClass) {
-            Assert.notNull(AnnotationUtils.getAnnotation(aClass, Dto.class),
-                    "Type should contain DTO annotation");
 
             return new ResponseDto<>(modelMapper.map(entity, aClass), this.status);
         }

@@ -39,7 +39,10 @@ public class JwtUtil {
     }
 
     public Claims getClaims(String token) {
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+        return Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private String generateToken(Map<String, Object> claims) {

@@ -28,7 +28,7 @@ class PersonController {
     }
 
     @GetMapping(value = Constant.PATH_VARIABLE_ID)
-    ResponseEntity<Person> findOneById(@PathVariable("id") Long id) {
+    ResponseEntity<Person> findOneById(@PathVariable(Constant.PATH_ID) Long id) {
         return ResponseEntity.ok(personService.findOneById(id));
     }
 
@@ -38,17 +38,17 @@ class PersonController {
     }
 
     @PutMapping(value = Constant.PATH_VARIABLE_ID)
-    ResponseEntity<Person> update(@PathVariable("id") Long id, @RequestBody @Validated Person person) {
+    ResponseEntity<Person> update(@PathVariable(Constant.PATH_ID) Long id, @RequestBody @Validated Person person) {
         return ResponseEntity.ok(personService.update(id, person));
     }
 
     @PatchMapping(value = Constant.PATH_VARIABLE_ID)
-    ResponseEntity<Person> patch(@PathVariable("id") Long id, @RequestBody @Validated Person person) {
+    ResponseEntity<Person> patch(@PathVariable(Constant.PATH_ID) Long id, @RequestBody @Validated Person person) {
         return ResponseEntity.ok(personService.patch(id, person));
     }
 
     @DeleteMapping(value = Constant.PATH_VARIABLE_ID)
-    ResponseEntity<Person> delete(@PathVariable("id") Long id) {
+    ResponseEntity<Person> delete(@PathVariable(Constant.PATH_ID) Long id) {
         return ResponseEntity.ok(personService.delete(id));
     }
 

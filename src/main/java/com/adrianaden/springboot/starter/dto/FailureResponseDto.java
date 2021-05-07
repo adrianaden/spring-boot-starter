@@ -10,7 +10,7 @@ import lombok.Setter;
 public class FailureResponseDto {
 
     private Integer status;
-    private Long timeStamp;
+    private Long timestamp;
     private String message;
     private String[] errors;
 }

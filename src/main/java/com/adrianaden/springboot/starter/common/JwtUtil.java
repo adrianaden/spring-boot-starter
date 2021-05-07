@@ -1,10 +1,11 @@
 package com.adrianaden.springboot.starter.common;
 
 import com.adrianaden.springboot.starter.entity.Person;
+import com.adrianaden.springboot.starter.properties.ApplicationProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -14,18 +15,9 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    @Value("${jwt.secret}")
-    private String jwtSecret;
+    @Autowired
+    private ApplicationProperties applicationProperties;
 
-    @Value("${jwt.expiration.second}")
-    private Long jwtExpiration;
-
-    /**
-     * generate token with payload
-     * @param person the payload of token
-     *
-     * @return hashed token
-     */
     public String generateToken(Person person) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("jti", person.getId());
@@ -40,7 +32,7 @@ public class JwtUtil {
 
     public Claims getClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(jwtSecret)
+                .setSigningKey(applicationProperties.getJwt().getSecret())
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -49,11 +41,11 @@ public class JwtUtil {
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .signWith(SignatureAlgorithm.HS512, applicationProperties.getJwt().getSecret())
                 .compact();
     }
 
     private Date generateExpirationDate() {
-        return new Date(System.currentTimeMillis() + jwtExpiration * 1000);
+        return new Date(System.currentTimeMillis() + applicationProperties.getJwt().getExpiration() * 1000);
     }
 }

@@ -3,6 +3,7 @@ package com.adrianaden.springboot.starter.service;
 import com.adrianaden.springboot.starter.annotation.LogExecutionTime;
 import com.adrianaden.springboot.starter.common.CopyUtil;
 import com.adrianaden.springboot.starter.entity.Person;
+import com.adrianaden.springboot.starter.properties.ApplicationProperties;
 import com.adrianaden.springboot.starter.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,9 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private ApplicationProperties properties;
+
     public Page<Person> findPage(Pageable pageable) {
         return personRepository.findAll(pageable);
     }
@@ -29,6 +33,7 @@ public class PersonService {
 
     @LogExecutionTime
     public Person create(Person person) {
+        System.out.println(properties.getJwt().getSecret());
         return personRepository.save(person);
     }
 

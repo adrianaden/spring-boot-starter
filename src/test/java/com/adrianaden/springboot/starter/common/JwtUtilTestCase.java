@@ -14,9 +14,9 @@ import java.util.Date;
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class JwtToolTestCase {
+public class JwtUtilTestCase {
     @Autowired
-    private JwtTool jwtTool;
+    private JwtUtil jwtUtil;
 
     @Test
     public void generateToken() {
@@ -24,7 +24,7 @@ public class JwtToolTestCase {
         person.setId(1L);
         person.setFirstName("Adrian");
         person.setLastName("Adendrata");
-        String actual = jwtTool.generateToken(person);
+        String actual = jwtUtil.generateToken(person);
         log.info(actual);
         Assert.assertNotNull(actual);
     }
@@ -36,15 +36,15 @@ public class JwtToolTestCase {
         person.setFirstName("Adrian");
         person.setLastName("Adendrata");
 
-        String token = jwtTool.generateToken(person);
+        String token = jwtUtil.generateToken(person);
         log.info(token);
         Assert.assertNotNull(token);
 
-        String lastName = jwtTool.getClaims(token).get("personLastName").toString();
-        String firstName = jwtTool.getClaims(token).get("personFirstName").toString();
-        Long personId = Long.parseLong(jwtTool.getClaims(token).get("personId").toString());
-        String id = jwtTool.getClaims(token).getId();
-        Date exp = jwtTool.getClaims(token).getExpiration();
+        String lastName = jwtUtil.getClaims(token).get("personLastName").toString();
+        String firstName = jwtUtil.getClaims(token).get("personFirstName").toString();
+        Long personId = Long.parseLong(jwtUtil.getClaims(token).get("personId").toString());
+        String id = jwtUtil.getClaims(token).getId();
+        Date exp = jwtUtil.getClaims(token).getExpiration();
         log.info(exp.toString());
 
         Assert.assertEquals(person.getLastName(), lastName);

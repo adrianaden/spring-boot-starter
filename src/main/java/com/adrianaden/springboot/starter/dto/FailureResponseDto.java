@@ -7,7 +7,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder
-public class FailureResponse {
+public class FailureResponseDto {
+
     private Integer status;
     private Long timeStamp;
     private String message;

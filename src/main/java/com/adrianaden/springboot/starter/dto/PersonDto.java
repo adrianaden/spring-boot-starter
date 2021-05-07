@@ -1,6 +1,6 @@
 package com.adrianaden.springboot.starter.dto;
 
-import com.adrianaden.springboot.starter.common.bind.DTO;
+import com.adrianaden.springboot.starter.annotation.Dto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,8 +9,9 @@ import javax.validation.constraints.Size;
 
 @Setter
 @Getter
-@DTO
-public class PersonDTO {
+@Dto
+public class PersonDto {
+
     @NotNull
     private String firstName;
 

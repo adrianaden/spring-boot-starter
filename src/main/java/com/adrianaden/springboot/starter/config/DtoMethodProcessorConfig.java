@@ -1,5 +1,6 @@
-package com.adrianaden.springboot.starter.common.bind;
+package com.adrianaden.springboot.starter.config;
 
+import com.adrianaden.springboot.starter.annotation.RequestDto;
 import org.dozer.DozerBeanMapper;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -17,17 +18,17 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Collections;
 
-public class DTOMethodProcessor extends RequestResponseBodyMethodProcessor {
+public class DtoMethodProcessorConfig extends RequestResponseBodyMethodProcessor {
 
     private static final DozerBeanMapper modelMapper = new DozerBeanMapper();
 
-    public DTOMethodProcessor() {
+    public DtoMethodProcessorConfig() {
         super(Collections.singletonList(new MappingJackson2HttpMessageConverter()));
     }
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(RequestDTO.class);
+        return parameter.hasParameterAnnotation(RequestDto.class);
     }
 
 //     uncomment to force validate
@@ -45,7 +46,7 @@ public class DTOMethodProcessor extends RequestResponseBodyMethodProcessor {
     @Override
     protected Object readWithMessageConverters(HttpInputMessage inputMessage, MethodParameter parameter, Type targetType) throws IOException, HttpMediaTypeNotSupportedException, HttpMessageNotReadableException {
         for (Annotation ann : parameter.getParameterAnnotations()) {
-            RequestDTO dtoType = AnnotationUtils.getAnnotation(ann, RequestDTO.class);
+            RequestDto dtoType = AnnotationUtils.getAnnotation(ann, RequestDto.class);
             if (dtoType != null) {
                 return super.readWithMessageConverters(inputMessage, parameter, dtoType.value());
             }

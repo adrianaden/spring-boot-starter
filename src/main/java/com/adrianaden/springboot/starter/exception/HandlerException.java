@@ -1,6 +1,6 @@
 package com.adrianaden.springboot.starter.exception;
 
-import com.adrianaden.springboot.starter.dto.FailureResponse;
+import com.adrianaden.springboot.starter.dto.FailureResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class HandlerException {
 
     @ExceptionHandler(Exception.class)
-    ResponseEntity<FailureResponse> exceptionHandler(Exception e) {
+    ResponseEntity<FailureResponseDto> exceptionHandler(Exception e) {
         log.error(e.getMessage(), e);
 
         return ResponseEntity.badRequest()
-                .body(FailureResponse.builder()
+                .body(FailureResponseDto.builder()
                         .status(HttpStatus.BAD_REQUEST.value())
                         .message(e.getClass().getSimpleName() + ".class Unexpected Error")
                         .errors(new String[]{e.getMessage()})
@@ -26,7 +26,7 @@ public class HandlerException {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    ResponseEntity<FailureResponse> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+    ResponseEntity<FailureResponseDto> methodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error(e.getMessage(), e);
 
         String[] errors = e.getBindingResult().getFieldErrors().stream()
@@ -34,7 +34,7 @@ public class HandlerException {
                            .toArray(String[]::new);
 
         return ResponseEntity.badRequest()
-                .body(FailureResponse.builder()
+                .body(FailureResponseDto.builder()
                         .status(HttpStatus.BAD_REQUEST.value())
                         .message("Arguments not valid")
                         .errors(errors)

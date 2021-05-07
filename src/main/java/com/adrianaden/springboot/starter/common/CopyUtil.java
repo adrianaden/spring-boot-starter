@@ -1,4 +1,4 @@
-package com.adrianaden.springboot.starter.common.util;
+package com.adrianaden.springboot.starter.common;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
@@ -7,9 +7,9 @@ import org.springframework.beans.BeanWrapperImpl;
 import java.beans.FeatureDescriptor;
 import java.util.Arrays;
 
-public class Copy {
+public class CopyUtil {
 
-    public Copy() {
+    public CopyUtil() {
         throw new IllegalArgumentException("Don't create instance Utility class!");
     }
 

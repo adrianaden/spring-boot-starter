@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class JwtTool {
+public class JwtUtil {
 
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -34,6 +34,7 @@ public class JwtTool {
         claims.put("personLastName", person.getLastName());
         claims.put("audience", "web");
         claims.put("created", new Date());
+
         return generateToken(claims);
     }
 

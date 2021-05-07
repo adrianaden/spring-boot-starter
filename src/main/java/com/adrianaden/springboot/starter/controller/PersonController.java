@@ -1,9 +1,9 @@
 package com.adrianaden.springboot.starter.controller;
 
 import com.adrianaden.springboot.starter.common.Constant;
-import com.adrianaden.springboot.starter.common.bind.RequestDTO;
-import com.adrianaden.springboot.starter.common.http.ResponseDTO;
-import com.adrianaden.springboot.starter.dto.PersonDTO;
+import com.adrianaden.springboot.starter.annotation.RequestDto;
+import com.adrianaden.springboot.starter.dto.ResponseDto;
+import com.adrianaden.springboot.starter.dto.PersonDto;
 import com.adrianaden.springboot.starter.entity.Person;
 import com.adrianaden.springboot.starter.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +33,8 @@ class PersonController {
     }
 
     @PostMapping
-    ResponseDTO<PersonDTO> create(@RequestDTO(PersonDTO.class) @Validated Person person) {
-        return ResponseDTO.accepted().convertTo(personService.create(person), PersonDTO.class);
+    ResponseDto<PersonDto> create(@RequestDto(PersonDto.class) @Validated Person person) {
+        return ResponseDto.accepted().convertTo(personService.create(person), PersonDto.class);
     }
 
     @PutMapping(value = Constant.PATH_VARIABLE_ID)

@@ -1,25 +1,25 @@
-package com.adrianaden.springboot.starter.common.http;
+package com.adrianaden.springboot.starter.dto;
 
-import com.adrianaden.springboot.starter.common.bind.DTO;
+import com.adrianaden.springboot.starter.annotation.Dto;
 import org.dozer.DozerBeanMapper;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
 
-public class ResponseDTO<T> extends HttpEntity<T> {
+public class ResponseDto<T> extends HttpEntity<T> {
 
     private static final DozerBeanMapper modelMapper = new DozerBeanMapper();
 
     private HttpStatus status;
 
-    ResponseDTO(T body, HttpStatus status) {
+    ResponseDto(T body, HttpStatus status) {
         super(body);
         this.status = status;
     }
 
 
-    public static ResponseDTO.Builder accepted() {
+    public static ResponseDto.Builder accepted() {
         return status(HttpStatus.ACCEPTED);
     }
 
@@ -32,7 +32,7 @@ public class ResponseDTO<T> extends HttpEntity<T> {
     }
 
     public interface Builder {
-        <T> ResponseDTO<T> convertTo(Object entity, Class<T> aClass);
+        <T> ResponseDto<T> convertTo(Object entity, Class<T> aClass);
     }
 
     private static class BodyBuilder  implements Builder{
@@ -42,11 +42,11 @@ public class ResponseDTO<T> extends HttpEntity<T> {
             this.status = status;
         }
 
-        public <T> ResponseDTO<T> convertTo(Object entity, Class<T> aClass) {
-            Assert.notNull(AnnotationUtils.getAnnotation(aClass, DTO.class),
+        public <T> ResponseDto<T> convertTo(Object entity, Class<T> aClass) {
+            Assert.notNull(AnnotationUtils.getAnnotation(aClass, Dto.class),
                     "Type should contain DTO annotation");
 
-            return new ResponseDTO<>(modelMapper.map(entity, aClass), this.status);
+            return new ResponseDto<>(modelMapper.map(entity, aClass), this.status);
         }
     }
 }

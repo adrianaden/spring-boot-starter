@@ -13,7 +13,6 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-
         if (StringUtils.isEmpty(request.getHeader("requestId"))) {
             throw new IllegalArgumentException("requestId is required header");
         }
